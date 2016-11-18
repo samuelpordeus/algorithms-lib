@@ -46,7 +46,7 @@ class SearchTests(unittest.TestCase):
         # Algorithm Configuration
         maxNoImprove = 500 # 50
         maxIterations = MAX # 50
-        greedinessFactor = 0.2  # should be in the range [0,1]. 0 is more greedy and 1 is more generalized
+        greedinessFactor = 0.2
 
         # Execute the algorithm
         result_list = []
