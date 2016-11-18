@@ -3,7 +3,7 @@ import tsplib_parser
 from result import TSPResult
 
 MAX = 1000
-timeConstraint = 0.5 # Teto para cada resultado das metaheurísticas - 60s para o trabalho
+timeConstraint = 60 # Teto para cada resultado das metaheurísticas - 60s para o trabalho
 
 class SearchTests(unittest.TestCase):
 
@@ -37,7 +37,7 @@ class SearchTests(unittest.TestCase):
                 rpd_list.insert(0, tspResult.getRPD(result))
                 print(tspResult.FormattedOutput(result))
 
-            print('-' * 30)
+            print('#' * 30)
             print("Media dos resultados:", int(sum(result_list) / len(result_list)))
             print("Media do RPD:", sum(rpd_list) / len(rpd_list))
 
@@ -59,7 +59,7 @@ class SearchTests(unittest.TestCase):
                 rpd_list.insert(0, tspResult.getRPD(result))
                 print(tspResult.FormattedOutput(result))
 
-            print('-' * 30)
+            print('*' * 30)
             print("Media do Tour Cost:", int(sum(result_list) / len(result_list)))
             print("Media do RPD:", sum(rpd_list) / len(rpd_list))
 
@@ -81,9 +81,10 @@ class SearchTests(unittest.TestCase):
                 rpd_list.insert(0, tspResult.getRPD(result))
 
                 print(tspResult.FormattedOutput(result))
-            print('-' * 30)
+            print('@' * 30)
             print("Media dos resultados:", int(sum(result_list) / len(result_list)))
             print("Media do RPD:", sum(rpd_list) / len(rpd_list))
+
 
 if __name__ == "__main__":
     unittest.main()
