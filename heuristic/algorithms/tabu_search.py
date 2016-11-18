@@ -42,10 +42,9 @@ def isTabu(perm, tabuList):
     return result
 
 
-def generateCandidates(best, tabuList, points, timeLimit):
-    t_end = time.time() + timeLimit
+def generateCandidates(best, tabuList, points):
     permutation, edges, result = None, None, {}
-    while permutation == None or isTabu(best["permutation"], tabuList) and time.time() < t_end:
+    while permutation == None or isTabu(best["permutation"], tabuList):
         permutation, edges = stochasticTwoOptWithEdges(best["permutation"])
     candidate = {}
     candidate["permutation"] = permutation
@@ -67,7 +66,7 @@ def search(points, maxIterations, maxTabu, maxCandidates, timeLimit):
         # Use Tabu list to not revisit previous rewired edges
         candidates = []
         for index in range(0, maxCandidates):
-            candidates.append(generateCandidates(best, tabuList, points, timeLimit))
+            candidates.append(generateCandidates(best, tabuList, points))
         # Locate the best candidate
         # sort the list of candidates by cost
         # since it is an  involved sort, we write a function for getting the least cost candidate
@@ -80,7 +79,6 @@ def search(points, maxIterations, maxTabu, maxCandidates, timeLimit):
             for edge in bestCandidateEdges:
                 if len(tabuList) < maxTabu:
                     tabuList.append(edge)
-
         maxIterations -= 1
 
     return best
