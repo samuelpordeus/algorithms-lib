@@ -1,40 +1,39 @@
 '''
-Strategy
-The strategy for the Variable Neighborhood Search involves iterative exploration of larger and larger neighborhoods for a
-given local optima until an improvement is located after which time the search across expanding neighborhoods is repeated.
-The strategy is motivated by three principles:
-1) a local minimum for one neighborhood structure may not be a local minimum for a different neighborhood structure,
-2) a global minimum is a local minimum for all possible neighborhood structures, and
-3) local minima are relatively close to global minima for many problem classes
+Estratégia:
+A estratégia para a Busca em Vizinhança Variável envolve exploração iterativa de vizinhanças cada vez maiores para um dado
+local ideal até que uma melhora seja localizada depois de cada repetição que a busca percorre expandindo vizinhanças.
 
-Heuristics
-Approximation methods (such as stochastic hill climbing) are suggested for use as the
-Local Search procedure for large problem instances in order to reduce the running time.
+A estratégia é motivada por três princípos:
+1) um mínimo local para uma estrutura de vizinhança pode não ser um mínimo local para estruturas de vizinhança diferentes,
+2) um mínimo global é um mínimo local para todas as estruturas de vizinhança possíveis, e
+3) mínimos locais são relativamente próximos aos mínimos globais para qualquer classe de problemas.
 
-Variable Neighborhood Search has been applied to a very wide array of combinatorial optimization problems
-as well as clustering and continuous function optimization problems.
+Heurísticas:
+Métodos aproximativos (como escalada estocástica) são sugeridos para uso como procedimento de Busca Local para grandes 
+instâncias de problema, com o objetivo de reduzir o tempo de execução.
 
-The embedded Local Search technique should be specialized to the problem type and instance to which the
-technique is being applied.
+Busca em Vizinhança Variável tem sido aplicado para uma ampla gama de problemas de otimização combinatória, assim como
+clustering e problemas de otimização de funções contínuas.
 
-The Variable Neighborhood Descent (VND) can be embedded in the Variable Neighborhood Search
-as a the Local Search procedure and has been shown to be most effective.
+A técnica de Busca Local utilizada deve ser específica para o tipo de problema e instância.
+
+O Variable Neighborhood Descent (VND) pode ser utilizado no VNS como procedimento de Busca Local e tem se mostrado o 
+mais efetivo.
 '''
 from algorithms.utilities import stochasticTwoOpt, tourCost, constructInitialSolution
 import time
 
 def localSearch(best, maxIter, neighborhood, timeLimit):
-    t_end = time.time() + timeLimit
     count =0
-    while count < maxIter and time.time() < t_end:
+    while count < maxIter and time.time() < timeLimit:
         candidate ={}
         candidate["permutation"]=best["permutation"]
-        for index in range(0,neighborhood):#Involves running stochastic two opt for neighbor times
-                # Get candidate solution from neighborhood
+        for index in range(0,neighborhood):# Envolve executar duas opções estocásticas por quantidade de vizinhos.
+                # Obter a solução candidata de vizinhança.
                 candidate["permutation"] = stochasticTwoOpt(candidate["permutation"])
 
         candidate["cost"] = tourCost(candidate["permutation"])
-        if candidate["cost"] < best["cost"]:# We also restart the search when we find the local optima
+        if candidate["cost"] < best["cost"]:# A busca é reiniciada quando um ótimo local é encontrado. # We also restart the search when we find the local optima
             best,count = candidate, 0
         else:
             count +=1
@@ -43,7 +42,7 @@ def localSearch(best, maxIter, neighborhood, timeLimit):
 
 def search(points,neighborhoods, maxNoImprove, maxNoImproveLocalSearch, timeLimit):
     t_end = time.time() + timeLimit
-    # First construct the initial solution. We use a random permutation as the initial solution
+    # Permutação aleatória é usada para a construção da solução inicial.
     best ={}
     best["permutation"] = constructInitialSolution(points)
     best["cost"] = tourCost(best["permutation"])
@@ -51,24 +50,23 @@ def search(points,neighborhoods, maxNoImprove, maxNoImproveLocalSearch, timeLimi
     while noImproveCount<=maxNoImprove and time.time() < t_end:
         candidate ={}
         candidate["permutation"] = best["permutation"]
-        # for each neighborhood in neighborhoods
+        # Para cada vizinhança em vizinhanças.
         for neighborhood in neighborhoods:
-            #Calculate Neighborhood : Involves running stochastic two opt for neighbor times
+            # Calcular vizinhança: Envolve executar duas opções estocásticas por quantidade de vizinhanças.
             for index in range(0,neighborhood):
-                # Get candidate solution from neighborhood
+                # Obter solução canditada de vizinhança.
                 candidate["permutation"] = stochasticTwoOpt(candidate["permutation"])
 
-            # Calculate the cost of the final neighborhood
+            # Calcular o custo da vizinhança final.
             candidate["cost"] = tourCost(candidate["permutation"])
-            # Refine candidate solution using local search and neighborhood
-            candidate = localSearch(candidate,maxNoImproveLocalSearch, neighborhood, timeLimit)
-            #if the cost of the candidate is lesser than cost of current best then replace
-            #best with current candidate
+            # Refinar a solução candidata final usando a busca local e a vizinhança.
+            candidate = localSearch(candidate,maxNoImproveLocalSearch, neighborhood, t_end)
+            # Se o custo da candidata é menor que o custo da melhor solução atual, então substitua a melhor pela candidata.
             if candidate["cost"] < best["cost"]:
-                best, noImproveCount = candidate, 0 # We also restart the search when we find the local optima
-                # break: this breaks out of the neighborhoods iteration
+                best, noImproveCount = candidate, 0 # Quando um ótimo local é encontrado a busca é reiniciada. 
+                # Interrupção da iteração das vizinhanças.
                 break
-            else: # increment the count as we did not find a local optima
+            else: # Incremento do contador para informar que um ótimo local não foi encontrado. 
                 noImproveCount +=1
 
     return best
