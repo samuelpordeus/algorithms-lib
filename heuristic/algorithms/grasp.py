@@ -1,18 +1,9 @@
 '''
-Strategy
-The strategy is to iteratively sample stochastically greedy solutions and then use a local search heuristic to refine them
-to a local optima. It builds a Restricted Candidate List (RCL) that constrains the features of a solution that may be selected from each
-cycle.
+Estrategia
+Iterativamente fazer soluções gulosas aleatórias e depois usar uma heurística de busca local para refiná-las.
+Construindo uma Lista Restrita de Candidatos (RCL) que delimita as features da solução a ser escolhida a cada ciclo
 
-Heuristics
-The RCL may be constrained by an explicit size, or by using a threshold [0, 1] on the cost of adding each feature
-to the current candidate solution.
-
-The threshold defines the amount of greediness of the construction mechanism, where values close to 0 may be too greedy, and values
-close to 1 may be too generalized.
-
-As an alternative to using a threshold, the RCL can be constrained to the top n% of candidate features that may be
-selected from each construction cycle.
+Threshold define o quão guloso o mecanismo de construção é, sendo 0 guloso e 1 generalizado.
 
 '''
 from algorithms.utilities import stochasticTwoOpt, tourCost, euclideanDistance
@@ -54,9 +45,8 @@ def constructGreedySolution(perm, alpha):
 
 
 def localSearch(best, maxIter, timeLimit):
-    t_end = time.time() + timeLimit
     count = 0
-    while count < maxIter and time.time() < t_end:
+    while count < maxIter and time.time() < timeLimit:
         candidate = {}
         candidate["permutation"] = stochasticTwoOpt(best["permutation"])
         candidate["cost"] = tourCost(candidate["permutation"])
@@ -75,7 +65,7 @@ def search(points, maxIterations, maxNoImprove, threshold, timeLimit):
         # Constroi a solução gulosa
         candidate = constructGreedySolution(points, threshold)
         # Refina usando a busca local
-        candidate = localSearch(candidate, maxNoImprove, timeLimit)
+        candidate = localSearch(candidate, maxNoImprove, t_end)
         if best == None or candidate["cost"] < best["cost"]:
             best = candidate
         maxIterations -= 1

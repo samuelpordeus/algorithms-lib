@@ -1,9 +1,9 @@
-import unittest, math
+import unittest, math, time
 import tsplib_parser
 from result import TSPResult
 
-MAX = 1000
-timeConstraint = 0.5 # Teto para cada resultado das metaheurísticas - 60s para o trabalho
+MAX = 10000
+timeConstraint = 60 # Teto para cada resultado das metaheurísticas - 60s para o trabalho
 
 class SearchTests(unittest.TestCase):
 
@@ -20,13 +20,14 @@ class SearchTests(unittest.TestCase):
         self.Vector = []
 
     def testVariableNeighborhoodSearch(self):
+        print("VNS START")
         from algorithms.vns import search
-        # Algorithm Configuration
+        # Configuração do algoritmo
         maxNoImprove = MAX # 50
-        maxNoImproveLocal = 70 # 70
-        neighborhoods = range(1, 20)  # since we want 20 runs for neighborhood starting with 1
+        maxNoImproveLocal = MAX # 70
+        neighborhoods = range(1, 21)  # 20 ciclos de neighborhoods
 
-        # Execute the algorithm
+        # Execução do algoritmo
         result_list = []
         rpd_list = []
         for x in range(len(self.TSP)):
@@ -37,18 +38,22 @@ class SearchTests(unittest.TestCase):
                 rpd_list.insert(0, tspResult.getRPD(result))
                 print(tspResult.FormattedOutput(result))
 
-            print('-' * 30)
+            print('#' * 30)
+            print("result_list:", result_list)
             print("Media dos resultados:", int(sum(result_list) / len(result_list)))
             print("Media do RPD:", sum(rpd_list) / len(rpd_list))
+            rpd_list = []
+            result_list = []
 
     def testGreedyRandomizedAdaptiveSearch(self):
+        print("GRASP START")
         from algorithms.grasp import search
-        # Algorithm Configuration
-        maxNoImprove = 500 # 50
+        # Configuração do algoritmo
+        maxNoImprove = MAX # 50
         maxIterations = MAX # 50
         greedinessFactor = 0.2
 
-        # Execute the algorithm
+        # Execução do algoritmo
         result_list = []
         rpd_list = []
         for x in range(len(self.TSP)):
@@ -59,18 +64,22 @@ class SearchTests(unittest.TestCase):
                 rpd_list.insert(0, tspResult.getRPD(result))
                 print(tspResult.FormattedOutput(result))
 
-            print('-' * 30)
+            print('*' * 30)
+            print("result_list:", result_list)
             print("Media do Tour Cost:", int(sum(result_list) / len(result_list)))
             print("Media do RPD:", sum(rpd_list) / len(rpd_list))
+            rpd_list = []
+            result_list = []
 
     def testTabuSearch(self):
+        print("TABU SEARCH START")
         from algorithms.tabu_search import search
-        # Algorithm Configuration
+        # Configuração do algoritmo
         maxIterations = MAX # 50
-        maxTabuCount = 15
-        maxCandidates = 50
+        maxTabuCount = 150
+        maxCandidates = 500
 
-        # Execute the algorithm
+        # Execução do algoritmo
         result_list = []
         rpd_list = []
         for x in range(len(self.TSP)):
@@ -81,9 +90,12 @@ class SearchTests(unittest.TestCase):
                 rpd_list.insert(0, tspResult.getRPD(result))
 
                 print(tspResult.FormattedOutput(result))
-            print('-' * 30)
-            print("Media dos resultados:", int(sum(result_list) / len(result_list)))
-            print("Media do RPD:", sum(rpd_list) / len(rpd_list))
+            print('@' * 30)
+            print("result_list:", result_list)
+            print("Media dos resultados:", int(sum(result_list) / 10))
+            print("Media do RPD:", float(float(sum(rpd_list)) / 10))
+            rpd_list = []
+            result_list = []
 
 if __name__ == "__main__":
     unittest.main()

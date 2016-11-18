@@ -10,12 +10,10 @@ class TSPResult(object):
         self.iteration = iteration
     def FormattedOutput(self, result):
         '''
-        Calculates the RPD of the search from the passed in result object,
-        which contains the tour cost of the final solution
-        The optimal tour distance for e.g. berlin52 is 7542 units
-        Search RPD is defined as how far we are away from the optimal
-        RPD = (tourCost - optimal)/optimal
-        an RPD of 0 is best
+        Calcula o RDP do resultado
+        Se a distancia ideal do passeio for de 7542 unidades, o RDP será definido por quão longe está do ideal.
+        RPD = (Custo do passeio - Ideal) / Ideal
+        RPD de 0 é o melhor.
         '''
         name = self.Algorithm + " - " + self.FileName +" - " + str(self.iteration)
         divider = "-" * 30

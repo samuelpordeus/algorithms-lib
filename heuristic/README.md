@@ -4,10 +4,6 @@
 
 Configurem os algoritmos de maneira que eu possa executá-los de forma ideal. Os parâmetros estão localizados na parte de configuração da suíte de testes
 
-As funções em comum já estão num arquivo chamado utilities.py
-
-Padronizar os comentários em português
-
 Reorganizar o módulo
 
 Se sobrar tempo, testaremos com: 25, 50, 100, 250 iterações
@@ -75,3 +71,24 @@ Utilizamos as entradas da TSPLib e fizemos uma função para adaptar os arquivò
 
 **pr76.tsp**
 - distância ideal: 108159 passos
+
+### 4. Algoritmos
+
+###### GRASP
+```python
+from algorithms import grasp
+# A entrada tem como parâmetros:
+# - A instância da TSPLIB em forma de lista
+# - O número máximo de iterações
+# - O número máximo de melhorias locais a serem feitas
+# - O threshold que determina o quão guloso o algoritmo é
+# - O fator que delimita o tempo máximo
+result = search(self.TSP[x][1], maxIterations, maxNoImprove, greedinessFactor, timeConstraint)
+# A saída pode ser obtida utilizando a função auxiliar do result.py TSPResult
+# Pois a saída do algoritmo contém muitas informações que são tratadas utilizando a TSPResult
+tspResult = TSPResult(self.TSP[x][0], "GRASP Results", self.TSP[x][2], y)
+```
+**Estrategia**
+
+Iterativamente fazer soluções gulosas aleatórias e depois usar uma heurística de busca local para refiná-las.
+Construindo uma Lista Restrita de Candidatos (RCL) que delimita as features da solução a ser escolhida a cada ciclo
