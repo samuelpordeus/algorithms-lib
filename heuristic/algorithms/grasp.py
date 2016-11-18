@@ -45,9 +45,8 @@ def constructGreedySolution(perm, alpha):
 
 
 def localSearch(best, maxIter, timeLimit):
-    t_end = time.time() + timeLimit
     count = 0
-    while count < maxIter and time.time() < t_end:
+    while count < maxIter and time.time() < timeLimit:
         candidate = {}
         candidate["permutation"] = stochasticTwoOpt(best["permutation"])
         candidate["cost"] = tourCost(candidate["permutation"])
@@ -66,7 +65,7 @@ def search(points, maxIterations, maxNoImprove, threshold, timeLimit):
         # Constroi a solução gulosa
         candidate = constructGreedySolution(points, threshold)
         # Refina usando a busca local
-        candidate = localSearch(candidate, maxNoImprove, timeLimit)
+        candidate = localSearch(candidate, maxNoImprove, t_end)
         if best == None or candidate["cost"] < best["cost"]:
             best = candidate
         maxIterations -= 1

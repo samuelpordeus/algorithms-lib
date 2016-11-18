@@ -39,7 +39,7 @@ class SearchTests(unittest.TestCase):
                 print(tspResult.FormattedOutput(result))
 
             print('#' * 30)
-             print("result_list:", result_list)
+            print("result_list:", result_list)
             print("Media dos resultados:", int(sum(result_list) / len(result_list)))
             print("Media do RPD:", sum(rpd_list) / len(rpd_list))
             rpd_list = []
@@ -76,8 +76,8 @@ class SearchTests(unittest.TestCase):
         from algorithms.tabu_search import search
         # Configuração do algoritmo
         maxIterations = MAX # 50
-        maxTabuCount = 15
-        maxCandidates = 50
+        maxTabuCount = 150
+        maxCandidates = 500
 
         # Execução do algoritmo
         result_list = []
@@ -91,7 +91,7 @@ class SearchTests(unittest.TestCase):
 
                 print(tspResult.FormattedOutput(result))
             print('@' * 30)
-             print("result_list:", result_list)
+            print("result_list:", result_list)
             print("Media dos resultados:", int(sum(result_list) / 10))
             print("Media do RPD:", float(float(sum(rpd_list)) / 10))
             rpd_list = []

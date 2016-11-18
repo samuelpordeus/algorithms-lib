@@ -24,9 +24,8 @@ from algorithms.utilities import stochasticTwoOpt, tourCost, constructInitialSol
 import time
 
 def localSearch(best, maxIter, neighborhood, timeLimit):
-    t_end = time.time() + timeLimit
     count =0
-    while count < maxIter and time.time() < t_end:
+    while count < maxIter and time.time() < timeLimit:
         candidate ={}
         candidate["permutation"]=best["permutation"]
         for index in range(0,neighborhood):#Involves running stochastic two opt for neighbor times
@@ -61,7 +60,7 @@ def search(points,neighborhoods, maxNoImprove, maxNoImproveLocalSearch, timeLimi
             # Calculate the cost of the final neighborhood
             candidate["cost"] = tourCost(candidate["permutation"])
             # Refine candidate solution using local search and neighborhood
-            candidate = localSearch(candidate,maxNoImproveLocalSearch, neighborhood, timeLimit)
+            candidate = localSearch(candidate,maxNoImproveLocalSearch, neighborhood, t_end)
             #if the cost of the candidate is lesser than cost of current best then replace
             #best with current candidate
             if candidate["cost"] < best["cost"]:
