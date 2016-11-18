@@ -35,4 +35,10 @@ sys.path.insert(0, 'heuristic/algorithms')
 
 #Metaheuristicas
 #Samuel
+import grasp
+
+# Victor
 import tabu_search
+
+#Elcius
+import vns
