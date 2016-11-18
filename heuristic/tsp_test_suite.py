@@ -21,12 +21,12 @@ class SearchTests(unittest.TestCase):
 
     def testVariableNeighborhoodSearch(self):
         from algorithms.vns import search
-        # Algorithm Configuration
+        # Configuração do algoritmo
         maxNoImprove = MAX # 50
         maxNoImproveLocal = 70 # 70
-        neighborhoods = range(1, 20)  # since we want 20 runs for neighborhood starting with 1
+        neighborhoods = range(1, 21)  # 20 ciclos de neighborhoods
 
-        # Execute the algorithm
+        # Execução do algoritmo
         result_list = []
         rpd_list = []
         for x in range(len(self.TSP)):
@@ -43,12 +43,12 @@ class SearchTests(unittest.TestCase):
 
     def testGreedyRandomizedAdaptiveSearch(self):
         from algorithms.grasp import search
-        # Algorithm Configuration
+        # Configuração do algoritmo
         maxNoImprove = 500 # 50
         maxIterations = MAX # 50
         greedinessFactor = 0.2
 
-        # Execute the algorithm
+        # Execução do algoritmo
         result_list = []
         rpd_list = []
         for x in range(len(self.TSP)):
@@ -65,12 +65,12 @@ class SearchTests(unittest.TestCase):
 
     def testTabuSearch(self):
         from algorithms.tabu_search import search
-        # Algorithm Configuration
+        # Configuração do algoritmo
         maxIterations = MAX # 50
         maxTabuCount = 15
         maxCandidates = 50
 
-        # Execute the algorithm
+        # Execução do algoritmo
         result_list = []
         rpd_list = []
         for x in range(len(self.TSP)):
