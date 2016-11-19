@@ -3,7 +3,7 @@ import tsplib_parser
 from result import TSPResult
 
 MAX = 10000
-timeConstraint = 60 # Teto para cada resultado das metaheurísticas - 60s para o trabalho
+timeConstraint = 0.1 # Teto para cada resultado das metaheurísticas - 60s para o trabalho
 
 class SearchTests(unittest.TestCase):
 
@@ -59,7 +59,7 @@ class SearchTests(unittest.TestCase):
         for x in range(len(self.TSP)):
             for y in range(1, 11):
                 result = search(self.TSP[x][1], maxIterations, maxNoImprove, greedinessFactor, timeConstraint)
-                result_list.insert(0, result["cost"])
+                result_list.append(result["cost"])
                 tspResult = TSPResult(self.TSP[x][0], "GRASP Results", self.TSP[x][2], y)
                 rpd_list.insert(0, tspResult.getRPD(result))
                 print(tspResult.FormattedOutput(result))
