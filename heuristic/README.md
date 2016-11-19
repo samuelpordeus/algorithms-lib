@@ -30,7 +30,7 @@ Variable Neighborhood Search
 Tabu Search
 
 ### 2. Testes
-Um conjunto de testes para cada algoritmo foi desenvolvido e é executado se você rodar o script de teste do algoritmo em questão.
+Dois conjuntos de testes foram realizados, um para testar a eficiência dos algoritmos e outro para testar a evolução dos algoritmos mediante iterações
 Para a criação dos testes automatizados, utilizamos o módulo [**unittest**](https://docs.python.org/3/library/unittest.html).
 
 ```python
@@ -49,10 +49,20 @@ class SearchTests(unittest.TestCase):
 ```
 Cada função de teste das três metaheurísticas roda o algoritmo **10** vezes. Algumas configurações do setup podem ser alteradas na suíte de testes
 
-Rodando o script no terminal:
+É interessante que o script da suíte de testes seja rodado com um timeConstraint de 0.1 se o usuário desejar testar apenas o funcionamentos dos algoritmos.
+
+Sscript no terminal:
 ```
-$ python3 test_suite.py
+$ python3 tsp_test_suite.py
 ```
+
+O teste de iterações pode ser rodado com
+
+```
+$ python3 tsp_test_iteration.py
+```
+---
+
 ---
 ### 3. Arquivos de entrada
 Utilizamos as entradas da TSPLib e fizemos uma função para adaptar os arquivòs da biblioteca para uma estrutura de dados adequada. Optamos por utilizar listas.

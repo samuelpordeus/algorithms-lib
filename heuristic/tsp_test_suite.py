@@ -3,7 +3,7 @@ import tsplib_parser
 from result import TSPResult
 
 MAX = 10000
-timeConstraint = 0.1 # Teto para cada resultado das metaheurísticas - 60s para o trabalho
+timeConstraint = 60 # Teto para cada resultado das metaheurísticas - 60s para o trabalho
 
 class SearchTests(unittest.TestCase):
 
