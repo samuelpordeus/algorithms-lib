@@ -47,20 +47,28 @@ class SearchTests(unittest.TestCase):
         self.TSP.insert(4, [108159, readtsplib.readData('TSPLIB/pr76.tsp')])
 
 ```
-Cada função de teste das três metaheurísticas roda o algoritmo **10** vezes. Algumas configurações do setup podem ser alteradas na suíte de testes
+Cada teste das três metaheurísticas roda o algoritmo **10** vezes. Algumas configurações do setup podem ser alteradas nos testes.
+
+Existem dois testes:
+
+*tsp_test_suite.py*: testa a eficiência do algoritmo, configurado de forma a maximizar a performance em 60s de execução.
+
+*tsp_test_iteration.py*: tem o objetivo de testar a evolução do algoritmo a cada iteração durante 60s de execução.
 
 É interessante que o script da suíte de testes seja rodado com um timeConstraint de 0.1 se o usuário desejar testar apenas o funcionamentos dos algoritmos.
 
-Sscript no terminal:
+Script no terminal:
 ```
 $ python3 tsp_test_suite.py
 ```
 
-O teste de iterações pode ser rodado com
+O script de teste de iteração pode ser rodado com:
 
 ```
 $ python3 tsp_test_iteration.py
 ```
+
+Os outputs estão formatados para uma análise de dados utilizando a biblioteca *Pandas*.
 ---
 
 ---
@@ -84,7 +92,7 @@ Utilizamos as entradas da TSPLib e fizemos uma função para adaptar os arquivò
 
 ### 4. Algoritmos
 
-###### GRASP
+##### GRASP
 ```python
 from algorithms import grasp
 # A entrada tem como parâmetros:
@@ -101,4 +109,17 @@ tspResult = TSPResult(self.TSP[x][0], "GRASP Results", self.TSP[x][2], y)
 **Estrategia**
 
 Iterativamente fazer soluções gulosas aleatórias e depois usar uma heurística de busca local para refiná-las.
-Construindo uma Lista Restrita de Candidatos (RCL) que delimita as features da solução a ser escolhida a cada ciclo
+Construindo uma Lista Restrita de Candidatos (RCL) que delimita as features da solução a ser escolhida a cada ciclo.
+
+##### Setup dos testes de eficiência
+```python
+maxNoImprove = 10000
+maxIterations = MAX
+greedinessFactor = 0.2
+```
+###### Setup dos testes de iteração
+```python
+maxNoImprove = 500
+maxIterations = MAX
+greedinessFactor = 0.2
+```
