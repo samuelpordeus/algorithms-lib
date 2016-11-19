@@ -1,26 +1,28 @@
 '''
-Strategy
-The strategy is to constrain an embedded heuristic from returning to recently visited areas of the search space (cycling).
-It maintains a short term memory of recent moves and prevents future moves from undoing those changes. This strategy can be extended
-by having intermediate term memory structures to bias moves towards promising areas (intensification), as well as long term memory
-structures that promote diversity.
+Estratégia
+A estratégia é restringir o retorno a áreas recentemente visitadas do espaço
+de busca através de uma heurística incorporada ao algoritmo (ciclicamente).
+O algoritmo mantém uma pequena memória de passos recentes e impede passos
+futuros de desfazer essas alterações. Esta estratégia pode ser estendida
+adicionando estruturas de memória intermediárias para servir de 'bias' nos
+passos próximos à áreas promissoras (intensificação), bem como estruturas de
+memória de longo prazo para promover a diversidade.
 
-Heuristics
-Tabu search was designed to manage an embedded hill climbing heuristic, although may be adapted to manage any neighborhood
-exploration heuristic.
+Heurística
+A Pesquisa Tabu foi projetado para gerenciar uma escalada heurística, embora
+pode ser adaptado para gerenciar qualquer exploração heurística de vizinhança.
 
-It has predominately been applied to discrete domains such as combinatorial optimization problems.
+Tem sido predominantemente aplicada a domínios discretos, tais como problemas
+de optimização combinatória.
 
-Candidates for neighboring moves can be generated deterministically for the entire neighborhood
-or the neighborhood can be stochastically sampled to a fixed size, trading off efficiency for accuracy.
-
+Os candidatos para passos vizinhos podem ser gerados deterministicamente para
+toda uma vizinhança, ou a vizinhança pode ser amostrada estocásticamente a um
+tamanho fixo, trocando eficiência por exatidão.
 '''
 from algorithms.utilities import constructInitialSolution, tourCost, stochasticTwoOptWithEdges
 import time
 
-# Function that returns a best candidate, sorting by cost
-
-
+# Função que retorna o melhor candidato, ordenada pelo custo
 def locateBestCandidate(candidates):
     candidates.sort(key=lambda c: c["candidate"]["cost"])
     best, edges = candidates[0]["candidate"], candidates[0]["edges"]
@@ -66,20 +68,20 @@ def search(points, maxIterations, maxTabu, maxCandidates, timeLimit):
     best["cost"] = tourCost(best["permutation"])
     tabuList = []
     while maxIterations > 0 and time.time() < t_end:
-        # Generate candidates using stocahstic 2-opt near current best candidate
-        # Use Tabu list to not revisit previous rewired edges
+        # Gera candicdatos usando o algoritmo 2-opt de busca local
+        # estocásticamente, perto do melhor candidato dessa iteração.
+        # Usa a lista tabu para não visitar vértices mais de uma vez
         candidates = []
         for index in range(0, maxCandidates):
             candidates.append(generateCandidates(best, tabuList, points, t_end))
-        # Locate the best candidate
-        # sort the list of candidates by cost
-        # since it is an  involved sort, we write a function for getting the least cost candidate
+        # Procura o melhor candidasto
+        # ordena a lista de cnadicados pelo custo
         bestCandidate, bestCandidateEdges = locateBestCandidate(candidates)
-        # compare with current best and update if necessary
+        # compara com o melhor candidato e o atualiza se necessário
         if bestCandidate["cost"] < best["cost"]:
-            # set current to the best, so thatwe can continue iteration
+            # define o candidato atual como melhor
             best = bestCandidate
-            # update tabu list
+            # atuliza a lista tabu
             for edge in bestCandidateEdges:
                 if len(tabuList) < maxTabu:
                     tabuList.append(edge)
@@ -88,26 +90,26 @@ def search(points, maxIterations, maxTabu, maxCandidates, timeLimit):
 def searchIteration(points, maxIterations, maxTabu, maxCandidates, timeLimit):
     t_end = time.time() + timeLimit
     best_list = []
-    # construct a random tour
+    # constrói a solução inical
     best = {}
     best["permutation"] = constructInitialSolution(points)
     best["cost"] = tourCost(best["permutation"])
     tabuList = []
     while maxIterations > 0 and time.time() < t_end:
-        # Generate candidates using stocahstic 2-opt near current best candidate
-        # Use Tabu list to not revisit previous rewired edges
+        # Gera candicdatos usando o algoritmo 2-opt de busca local
+        # estocásticamente, perto do melhor candidato dessa iteração.
+        # Usa a lista tabu para não visitar vértices mais de uma vez
         candidates = []
         for index in range(0, maxCandidates):
             candidates.append(generateCandidates(best, tabuList, points, t_end))
-        # Locate the best candidate
-        # sort the list of candidates by cost
-        # since it is an  involved sort, we write a function for getting the least cost candidate
+        # Procura o melhor candidasto
+        # ordena a lista de cnadicados pelo custo
         bestCandidate, bestCandidateEdges = locateBestCandidate(candidates)
-        # compare with current best and update if necessary
+        # compara com o melhor candidato e o atualiza se necessário
         if bestCandidate["cost"] < best["cost"]:
-            # set current to the best, so thatwe can continue iteration
+            # define o candidato atual como melhor
             best = bestCandidate
-            # update tabu list
+            # atuliza a lista tabu
             for edge in bestCandidateEdges:
                 if len(tabuList) < maxTabu:
                     tabuList.append(edge)
