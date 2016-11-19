@@ -70,3 +70,19 @@ def search(points, maxIterations, maxNoImprove, threshold, timeLimit):
             best = candidate
         maxIterations -= 1
     return best
+
+def searchIteration(points, maxIterations, maxNoImprove, threshold, timeLimit):
+    best_list = []
+    t_end = time.time() + timeLimit
+    best = None
+    while maxIterations > 0 and time.time() < t_end:
+        # Constroi a solução gulosa
+        candidate = constructGreedySolution(points, threshold)
+        # Refina usando a busca local
+        candidate = localSearch(candidate, maxNoImprove, t_end)
+        if best == None or candidate["cost"] < best["cost"]:
+            best = candidate
+        maxIterations -= 1
+        # print(best["cost"])
+        best_list.append(best["cost"])
+    return best_list

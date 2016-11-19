@@ -85,4 +85,33 @@ def search(points, maxIterations, maxTabu, maxCandidates, timeLimit):
                     tabuList.append(edge)
         maxIterations -= 1
 
-    return best
+def searchIteration(points, maxIterations, maxTabu, maxCandidates, timeLimit):
+    t_end = time.time() + timeLimit
+    best_list = []
+    # construct a random tour
+    best = {}
+    best["permutation"] = constructInitialSolution(points)
+    best["cost"] = tourCost(best["permutation"])
+    tabuList = []
+    while maxIterations > 0 and time.time() < t_end:
+        # Generate candidates using stocahstic 2-opt near current best candidate
+        # Use Tabu list to not revisit previous rewired edges
+        candidates = []
+        for index in range(0, maxCandidates):
+            candidates.append(generateCandidates(best, tabuList, points, t_end))
+        # Locate the best candidate
+        # sort the list of candidates by cost
+        # since it is an  involved sort, we write a function for getting the least cost candidate
+        bestCandidate, bestCandidateEdges = locateBestCandidate(candidates)
+        # compare with current best and update if necessary
+        if bestCandidate["cost"] < best["cost"]:
+            # set current to the best, so thatwe can continue iteration
+            best = bestCandidate
+            # update tabu list
+            for edge in bestCandidateEdges:
+                if len(tabuList) < maxTabu:
+                    tabuList.append(edge)
+        maxIterations -= 1
+        best_list.append(best["cost"])
+
+    return best_list

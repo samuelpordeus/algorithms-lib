@@ -71,4 +71,38 @@ def search(points,neighborhoods, maxNoImprove, maxNoImproveLocalSearch, timeLimi
 
     return best
 
+def searchIteration(points,neighborhoods, maxNoImprove, maxNoImproveLocalSearch, timeLimit):
+    t_end = time.time() + timeLimit
+    best_list = []
+    # First construct the initial solution. We use a random permutation as the initial solution
+    best ={}
+    best["permutation"] = constructInitialSolution(points)
+    best["cost"] = tourCost(best["permutation"])
+    noImproveCount =0
+    while noImproveCount<=maxNoImprove and time.time() < t_end:
+        candidate ={}
+        candidate["permutation"] = best["permutation"]
+        # for each neighborhood in neighborhoods
+        for neighborhood in neighborhoods:
+            #Calculate Neighborhood : Involves running stochastic two opt for neighbor times
+            for index in range(0,neighborhood):
+                # Get candidate solution from neighborhood
+                candidate["permutation"] = stochasticTwoOpt(candidate["permutation"])
+
+            # Calculate the cost of the final neighborhood
+            candidate["cost"] = tourCost(candidate["permutation"])
+            # Refine candidate solution using local search and neighborhood
+            candidate = localSearch(candidate,maxNoImproveLocalSearch, neighborhood, t_end)
+            #if the cost of the candidate is lesser than cost of current best then replace
+            #best with current candidate
+            if candidate["cost"] < best["cost"]:
+                best, noImproveCount = candidate, 0 # We also restart the search when we find the local optima
+                best_list.append(best["cost"]) # break: this breaks out of the neighborhoods iteration
+                break
+            else: # increment the count as we did not find a local optima
+                best_list.append(best["cost"])
+                noImproveCount +=1
+
+    return best_list
+
 
