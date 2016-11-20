@@ -3,7 +3,7 @@ import tsplib_parser
 from result import TSPResult
 
 MAX = 10000
-timeConstraint = 10 # Teto para cada resultado das metaheurísticas - 60s para o trabalho
+timeConstraint = 60 # Teto para cada resultado das metaheurísticas - 60s para o trabalho
 
 class SearchTests(unittest.TestCase):
 
@@ -24,7 +24,7 @@ class SearchTests(unittest.TestCase):
         from algorithms.vns import searchIteration
         # Configuração do algoritmo
         maxNoImprove = MAX # 50
-        maxNoImproveLocal = MAX # 70
+        maxNoImproveLocal = 700 # 70
         neighborhoods = range(1, 21)  # 20 ciclos de neighborhoods
 
         # Execução do algoritmo
@@ -42,7 +42,7 @@ class SearchTests(unittest.TestCase):
         print("GRASP START")
         from algorithms.grasp import searchIteration
         # Configuração do algoritmo
-        maxNoImprove = MAX # 50
+        maxNoImprove = 500 # 50
         maxIterations = MAX # 50
         greedinessFactor = 0.2
 
@@ -55,7 +55,7 @@ class SearchTests(unittest.TestCase):
                     rpd = (result[z] - self.TSP[x][0]) / self.TSP[x][0]
                     result[z] = rpd
                 print((self.TSP[x][2] + str(y)), "=", str(result))
-                print(('G_' + self.TSP[x][2] + str(y)), "=", "Series(" + ('G_' + self.TSP[x][2] + str(y)) + ")")
+                print(('G_' + self.TSP[x][2] + str(y)), "=", "Series(" + (self.TSP[x][2] + str(y)) + ")")
             # print("Media do RPD:", sum(rpd_list) / len(rpd_list))
             print('*' * 30)
 
@@ -77,7 +77,7 @@ class SearchTests(unittest.TestCase):
                 for z in range(len(result)):
                     result[z] = (result[z] - self.TSP[x][0]) / self.TSP[x][0]
                 print((self.TSP[x][2] + str(y)), "=", str(result))
-                print(('T_' + self.TSP[x][2] + str(y)), "=", "Series(" + ('T_' + self.TSP[x][2] + str(y)) + ")")
+                print(('T_' + self.TSP[x][2] + str(y)), "=", "Series(" + (self.TSP[x][2] + str(y)) + ")")
 
             print('*' * 30)
 

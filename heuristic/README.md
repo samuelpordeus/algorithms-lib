@@ -30,7 +30,7 @@ Variable Neighborhood Search
 Tabu Search
 
 ### 2. Testes
-Um conjunto de testes para cada algoritmo foi desenvolvido e é executado se você rodar o script de teste do algoritmo em questão.
+Dois conjuntos de testes foram realizados, um para testar a eficiência dos algoritmos e outro para testar a evolução dos algoritmos mediante iterações
 Para a criação dos testes automatizados, utilizamos o módulo [**unittest**](https://docs.python.org/3/library/unittest.html).
 
 ```python
@@ -47,12 +47,30 @@ class SearchTests(unittest.TestCase):
         self.TSP.insert(4, [108159, readtsplib.readData('TSPLIB/pr76.tsp')])
 
 ```
-Cada função de teste das três metaheurísticas roda o algoritmo **10** vezes. Algumas configurações do setup podem ser alteradas na suíte de testes
+Cada teste das três metaheurísticas roda o algoritmo **10** vezes. Algumas configurações do setup podem ser alteradas nos testes.
 
-Rodando o script no terminal:
+Existem dois testes:
+
+*tsp_test_suite.py*: testa a eficiência do algoritmo, configurado de forma a maximizar a performance em 60s de execução.
+
+*tsp_test_iteration.py*: tem o objetivo de testar a evolução do algoritmo a cada iteração durante 60s de execução.
+
+É interessante que o script da suíte de testes seja rodado com um timeConstraint de 0.1 se o usuário desejar testar apenas o funcionamentos dos algoritmos.
+
+Script no terminal:
 ```
-$ python3 test_suite.py
+$ python3 tsp_test_suite.py
 ```
+
+O script de teste de iteração pode ser rodado com:
+
+```
+$ python3 tsp_test_iteration.py
+```
+
+Os outputs estão formatados para uma análise de dados utilizando a biblioteca *Pandas*.
+---
+
 ---
 ### 3. Arquivos de entrada
 Utilizamos as entradas da TSPLib e fizemos uma função para adaptar os arquivòs da biblioteca para uma estrutura de dados adequada. Optamos por utilizar listas.
@@ -74,7 +92,7 @@ Utilizamos as entradas da TSPLib e fizemos uma função para adaptar os arquivò
 
 ### 4. Algoritmos
 
-###### GRASP
+##### GRASP
 ```python
 from algorithms import grasp
 # A entrada tem como parâmetros:
@@ -91,4 +109,54 @@ tspResult = TSPResult(self.TSP[x][0], "GRASP Results", self.TSP[x][2], y)
 **Estrategia**
 
 Iterativamente fazer soluções gulosas aleatórias e depois usar uma heurística de busca local para refiná-las.
-Construindo uma Lista Restrita de Candidatos (RCL) que delimita as features da solução a ser escolhida a cada ciclo
+Construindo uma Lista Restrita de Candidatos (RCL) que delimita as features da solução a ser escolhida a cada ciclo.
+
+##### Setup dos testes de eficiência
+```python
+maxNoImprove = 10000
+maxIterations = MAX
+greedinessFactor = 0.2
+```
+###### Setup dos testes de iteração
+```python
+maxNoImprove = 500
+maxIterations = MAX
+greedinessFactor = 0.2
+```
+
+##### VNS
+```python
+from algorithms.vns import search
+# A entrada tem como parâmetros:
+# - A instância da TSPLIB em forma de lista
+# - O ciclo de vizinhanças
+# - O número máximo de melhorias locais a serem feitas
+# - O número máximo de melhorias locais a serem feitas na busca local do VNS
+# - O fator que delimita o tempo máximo
+result = search(self.TSP[x][1], neighborhoods, maxNoImprove, maxNoImproveLocal, timeConstraint)
+# A saída pode ser novamente obtida utilizando a função auxiliar do result.py TSPResult
+# As informações que contidas na saída serão mais uma vez tratadas utilizando esta função auxiliar
+tspResult = TSPResult(self.TSP[x][0], "VNS Results", self.TSP[x][2], y)
+```
+**Estratégia**
+
+A estratégia para a Busca em Vizinhança Variável envolve exploração iterativa de vizinhanças cada vez maiores para um dado
+local ideal até que uma melhora seja localizada depois de cada repetição que a busca percorre expandindo vizinhanças.
+
+A estratégia é motivada por três princípos:
+- 1) um mínimo local para uma estrutura de vizinhança pode não ser um mínimo local para estruturas de vizinhança diferentes,
+- 2) um mínimo global é um mínimo local para todas as estruturas de vizinhança possíveis, e
+- 3) mínimos locais são relativamente próximos aos mínimos globais para qualquer classe de problemas.
+
+##### Setup dos testes de eficiência
+```python
+maxNoImprove = MAX
+maxNoImproveLocal = MAX
+neighborhoods = range(1, 21)
+```
+###### Setup dos testes de iteração
+```python
+maxNoImprove = MAX
+maxNoImproveLocal = 700 
+neighborhoods = range(1, 21)
+```
