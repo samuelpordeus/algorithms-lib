@@ -87,6 +87,8 @@ def search(points, maxIterations, maxTabu, maxCandidates, timeLimit):
                     tabuList.append(edge)
         maxIterations -= 1
 
+        return best
+
 def searchIteration(points, maxIterations, maxTabu, maxCandidates, timeLimit):
     t_end = time.time() + timeLimit
     best_list = []
