@@ -33,7 +33,7 @@ def localSearch(best, maxIter, neighborhood, timeLimit):
                 candidate["permutation"] = stochasticTwoOpt(candidate["permutation"])
 
         candidate["cost"] = tourCost(candidate["permutation"])
-        if candidate["cost"] < best["cost"]:# A busca é reiniciada quando um ótimo local é encontrado. # We also restart the search when we find the local optima
+        if candidate["cost"] < best["cost"]:# A busca é reiniciada quando um ótimo local é encontrado.
             best,count = candidate, 0
         else:
             count +=1
@@ -74,7 +74,7 @@ def search(points,neighborhoods, maxNoImprove, maxNoImproveLocalSearch, timeLimi
 def searchIteration(points,neighborhoods, maxNoImprove, maxNoImproveLocalSearch, timeLimit):
     t_end = time.time() + timeLimit
     best_list = []
-    # First construct the initial solution. We use a random permutation as the initial solution
+    # Permutação aleatória é usada para a construção da solução inicial.
     best ={}
     best["permutation"] = constructInitialSolution(points)
     best["cost"] = tourCost(best["permutation"])
@@ -82,24 +82,24 @@ def searchIteration(points,neighborhoods, maxNoImprove, maxNoImproveLocalSearch,
     while noImproveCount<=maxNoImprove and time.time() < t_end:
         candidate ={}
         candidate["permutation"] = best["permutation"]
-        # for each neighborhood in neighborhoods
+        # Para cada vizinhança em vizinhanças.
         for neighborhood in neighborhoods:
-            #Calculate Neighborhood : Involves running stochastic two opt for neighbor times
+            # Calcular vizinhança: Envolve executar duas opções estocásticas por quantidade de vizinhanças.
             for index in range(0,neighborhood):
-                # Get candidate solution from neighborhood
+                # Obter solução canditada de vizinhança.
                 candidate["permutation"] = stochasticTwoOpt(candidate["permutation"])
 
-            # Calculate the cost of the final neighborhood
+            # Calcular o custo da vizinhança final.
             candidate["cost"] = tourCost(candidate["permutation"])
-            # Refine candidate solution using local search and neighborhood
+            # Refinar a solução candidata final usando a busca local e a vizinhança.
             candidate = localSearch(candidate,maxNoImproveLocalSearch, neighborhood, t_end)
-            #if the cost of the candidate is lesser than cost of current best then replace
-            #best with current candidate
+            # Se o custo da candidata é menor que o custo da melhor solução atual, então substitua a melhor pela candidata.
             if candidate["cost"] < best["cost"]:
-                best, noImproveCount = candidate, 0 # We also restart the search when we find the local optima
-                best_list.append(best["cost"]) # break: this breaks out of the neighborhoods iteration
+                best, noImproveCount = candidate, 0 # Quando um ótimo local é encontrado a busca é reiniciada. 
+                best_list.append(best["cost"]) 
+                # Interrupção da iteração das vizinhanças.
                 break
-            else: # increment the count as we did not find a local optima
+            else: # Incremento do contador para informar que um ótimo local não foi encontrado. 
                 best_list.append(best["cost"])
                 noImproveCount +=1
 
