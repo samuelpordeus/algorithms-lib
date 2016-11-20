@@ -123,3 +123,40 @@ maxNoImprove = 500
 maxIterations = MAX
 greedinessFactor = 0.2
 ```
+
+##### VNS
+```python
+from algorithms.vns import search
+# A entrada tem como parâmetros:
+# - A instância da TSPLIB em forma de lista
+# - O ciclo de vizinhanças
+# - O número máximo de melhorias locais a serem feitas
+# - O número máximo de melhorias locais a serem feitas na busca local do VNS
+# - O fator que delimita o tempo máximo
+result = search(self.TSP[x][1], neighborhoods, maxNoImprove, maxNoImproveLocal, timeConstraint)
+# A saída pode ser novamente obtida utilizando a função auxiliar do result.py TSPResult
+# As informações que contidas na saída serão mais uma vez tratadas utilizando esta função auxiliar
+tspResult = TSPResult(self.TSP[x][0], "VNS Results", self.TSP[x][2], y)
+```
+**Estratégia**
+
+A estratégia para a Busca em Vizinhança Variável envolve exploração iterativa de vizinhanças cada vez maiores para um dado
+local ideal até que uma melhora seja localizada depois de cada repetição que a busca percorre expandindo vizinhanças.
+
+A estratégia é motivada por três princípos:
+1) um mínimo local para uma estrutura de vizinhança pode não ser um mínimo local para estruturas de vizinhança diferentes,
+2) um mínimo global é um mínimo local para todas as estruturas de vizinhança possíveis, e
+3) mínimos locais são relativamente próximos aos mínimos globais para qualquer classe de problemas.
+
+##### Setup dos testes de eficiência
+```python
+maxNoImprove = MAX
+maxNoImproveLocal = MAX
+neighborhoods = range(1, 21)
+```
+###### Setup dos testes de iteração
+```python
+maxNoImprove = MAX
+maxNoImproveLocal = 700 
+neighborhoods = range(1, 21)
+```
