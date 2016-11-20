@@ -1,17 +1,5 @@
 # Módulo adicional - Otimização heurística
 
-## TODO
-
-Configurem os algoritmos de maneira que eu possa executá-los de forma ideal. Os parâmetros estão localizados na parte de configuração da suíte de testes
-
-Reorganizar o módulo
-
-Se sobrar tempo, testaremos com: 25, 50, 100, 250 iterações
-
-
-
-
-
 #### Samuel Pordeus - Elcius Ferreira - Victor Franco
 
 A biblioteca contém 3 abordagens metaheurísticas para resolução do **Problema do Caixeiro Viajante**
@@ -117,7 +105,7 @@ maxNoImprove = 10000
 maxIterations = MAX
 greedinessFactor = 0.2
 ```
-###### Setup dos testes de iteração
+##### Setup dos testes de iteração
 ```python
 maxNoImprove = 500
 maxIterations = MAX
@@ -154,7 +142,7 @@ maxNoImprove = MAX
 maxNoImproveLocal = MAX
 neighborhoods = range(1, 21)
 ```
-###### Setup dos testes de iteração
+##### Setup dos testes de iteração
 ```python
 maxNoImprove = MAX
 maxNoImproveLocal = 700
@@ -191,7 +179,7 @@ maxIterations = MAX
 maxTabuCount = 150
 maxCandidates = 500
 ```
-###### Setup dos testes de iteração
+##### Setup dos testes de iteração
 ```python
 maxIterations = MAX
 maxTabuCount = 150
