@@ -160,3 +160,40 @@ maxNoImprove = MAX
 maxNoImproveLocal = 700
 neighborhoods = range(1, 21)
 ```
+
+#### 4.3 Tabu Search
+```python
+from algorithms.tabu_search import search
+# A entrada tem como parâmetros:
+# - A instância da TSPLIB em forma de lista
+# - O número máximo de iterações
+# - O tamanho máximo da lista Tabu
+# - O número máximo de candidatos
+# - O fator que delimita o tempo máximo
+result = search(self.TSP[x][1], maxIterations, maxTabu, maxCandidates, timeConstraint)
+# A saída pode ser obtida utilizando a função auxiliar do result.py TSPResult
+# Pois a saída do algoritmo contém muitas informações que são tratadas utilizando a TSPResult
+tspResult = TSPResult(self.TSP[x][0], "Tabu Results", self.TSP[x][2], y)
+```
+**Estratégia**
+
+A estratégia é restringir o retorno a áreas recentemente visitadas do espaço
+de busca através de uma heurística incorporada ao algoritmo (ciclicamente).
+O algoritmo mantém uma pequena memória de passos recentes e impede passos
+futuros de desfazer essas alterações. Esta estratégia pode ser estendida
+adicionando estruturas de memória intermediárias para servir de 'bias' nos
+passos próximos à áreas promissoras (intensificação), bem como estruturas de
+memória de longo prazo para promover a diversidade.
+
+##### Setup dos testes de eficiência
+```python
+maxIterations = MAX
+maxTabuCount = 150
+maxCandidates = 500
+```
+###### Setup dos testes de iteração
+```python
+maxIterations = MAX
+maxTabuCount = 150
+maxCandidates = 500
+```
