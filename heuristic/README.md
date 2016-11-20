@@ -8,13 +8,13 @@ A biblioteca contém 3 abordagens metaheurísticas para resolução do **Problem
 A biblioteca segue os padrões de código de **Python** da [**PEP8**](https://www.python.org/dev/peps/pep-0008/)
 
 ### 1. Designação das metaheurísticas
-### **Samuel Pordeus**
+##### **Samuel Pordeus**
 GRASP
 
-### **Elcius Ferreira**
+##### **Elcius Ferreira**
 Variable Neighborhood Search
 
-### **Victor Franco**
+##### **Victor Franco**
 Tabu Search
 
 ### 2. Testes
@@ -93,7 +93,7 @@ result = search(self.TSP[x][1], maxIterations, maxNoImprove, greedinessFactor, t
 # Pois a saída do algoritmo contém muitas informações que são tratadas utilizando a TSPResult
 tspResult = TSPResult(self.TSP[x][0], "GRASP Results", self.TSP[x][2], y)
 ```
-**Estrategia**
+**Estratégia**
 
 Iterativamente fazer soluções gulosas aleatórias e depois usar uma heurística de busca local para refiná-las.
 Construindo uma Lista Restrita de Candidatos (RCL) que delimita as features da solução a ser escolhida a cada ciclo.
