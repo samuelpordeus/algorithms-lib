@@ -56,8 +56,7 @@ O script de teste de iteração pode ser rodado com:
 $ python3 tsp_test_iteration.py
 ```
 
-Os outputs estão formatados para uma análise de dados utilizando a biblioteca *Pandas*.
----
+###### Os outputs estão formatados para uma análise de dados utilizando a biblioteca *Pandas*.
 
 ---
 ### 3. Arquivos de entrada
