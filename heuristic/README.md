@@ -144,9 +144,9 @@ A estratégia para a Busca em Vizinhança Variável envolve exploração iterati
 local ideal até que uma melhora seja localizada depois de cada repetição que a busca percorre expandindo vizinhanças.
 
 A estratégia é motivada por três princípos:
-1) um mínimo local para uma estrutura de vizinhança pode não ser um mínimo local para estruturas de vizinhança diferentes,
-2) um mínimo global é um mínimo local para todas as estruturas de vizinhança possíveis, e
-3) mínimos locais são relativamente próximos aos mínimos globais para qualquer classe de problemas.
+um mínimo local para uma estrutura de vizinhança pode não ser um mínimo local para estruturas de vizinhança diferentes,
+um mínimo global é um mínimo local para todas as estruturas de vizinhança possíveis, e
+mínimos locais são relativamente próximos aos mínimos globais para qualquer classe de problemas.
 
 ##### Setup dos testes de eficiência
 ```python
