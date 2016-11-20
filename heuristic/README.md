@@ -92,7 +92,7 @@ Utilizamos as entradas da TSPLib e fizemos uma função para adaptar os arquivò
 
 ### 4. Algoritmos
 
-##### GRASP
+#### GRASP
 ```python
 from algorithms import grasp
 # A entrada tem como parâmetros:
@@ -124,7 +124,7 @@ maxIterations = MAX
 greedinessFactor = 0.2
 ```
 
-##### VNS
+#### VNS
 ```python
 from algorithms.vns import search
 # A entrada tem como parâmetros:
@@ -157,6 +157,6 @@ neighborhoods = range(1, 21)
 ###### Setup dos testes de iteração
 ```python
 maxNoImprove = MAX
-maxNoImproveLocal = 700 
+maxNoImproveLocal = 700
 neighborhoods = range(1, 21)
 ```
