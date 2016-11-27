@@ -19,8 +19,8 @@ def constructGreedySolution(perm, alpha):
     while len(candidate["permutation"]) < problemSize:
         # Pega todos os pontos, exceto os já presentes na solução candidata
         candidates = [item for item in perm if item not in candidate["permutation"]]
-        # Calcula o custo de adicionar uma feature à solução
-        # A 'feature' é definida por quão longe os outros pontos estão do último elemento da lista de candidatos
+        # Calcula o custo de adicionar uma característica à solução
+        # A 'feature' ou característica é definida por quão longe os outros pontos estão do último elemento da lista de candidatos
         costs = []
         candidateSize = len(candidate["permutation"])
         for item in candidates:
@@ -28,7 +28,7 @@ def constructGreedySolution(perm, alpha):
         # Determina o menor e o maior custo do determinado set
         rcl, maxCost, minCost = [], max(costs), min(costs)
         # Construimos o RCL da seguinte maneira:
-        # Adicionamos o que for menor ou igual ao mínimo + o custo da feature pela fórmula da RCL
+        # Adicionamos o que for menor ou igual ao mínimo + o custo da característica pela fórmula da RCL
         # Quanto menor a distância aqui, menor o custo final do algoritmo
         # Custo de cada Feature:
         for index, cost in enumerate(costs):  # Para conseguir o index e o item enquanto faz o loop
